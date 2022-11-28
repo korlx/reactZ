@@ -17,19 +17,21 @@ const Form = () => {
                
                 <label  className='mt-3'>FullName:</label>
                 <input {...register('fullName',{required:true, minLength:2,maxLength:20})} placeholder='Example:Suka' className='form-control' type="text" />
-                
+                {errors.fullName && <span className='d-block text-danger'>Invalid Full Name....</span>}
                 <label className='mt-4'>Email:</label>
                 <input {...register('email',{required:true, pattern:emailReg})}  className='form-control' type="text" />
-                
+                {errors.email && <span className='d-block text-danger'>Invalid email....</span>}
                 <label className='mt-4'>Password:</label>
                 <input {...register('password',{required:true, minLength:4,maxLength:20})} className='form-control' type="password" />
-                
+                {errors.password && <span className='d-block text-danger'>Invalid password....</span>}
+
                 <label className='mt-4'>Confirm Password:</label>
                 <input {...register('confirmPassword',{required:true, validate:(item)=>getValues('password')})} className='form-control' type="password" />
-                
+                {errors.confirmPassword && <span className='d-block text-danger'>password not match....</span>}
+
                 <label className='mt-4'>Birthdate:</label>
                 <input {...register('BirthDate',{required:true})} className='form-control text-start' type="date" />
-                
+                {errors.birthDate && <span className='d-block text-danger'>birthdate is required...</span>}
                 <button className='btn btn-dark mt-3 px-4 py-2'>Sign Up</button>
             </form>
 
