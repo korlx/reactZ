@@ -34,9 +34,7 @@ const Cars = () => {
              carsFilterd = data.filter(item => item.category === category);
               
             }
-            else{
-                carsFilterd=[...data]
-            }
+           
            
 
             setCars(carsFilterd);
