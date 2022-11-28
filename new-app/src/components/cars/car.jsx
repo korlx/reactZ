@@ -2,7 +2,7 @@ import React from 'react'
 
 const car = (props) => {
     const car = props.car;
-    console.log(props);
+   
   return (
     <div className='col-12 col-md-6 col-lg-4 p-3 h-100'>
     <div className='row border shadow p-2 h-100'>
