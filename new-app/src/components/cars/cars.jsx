@@ -7,7 +7,7 @@ import Car from './car'
 const Cars = () => {
     const [cars, setCars] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [category,setCategory]=useState("All");
+    const [category, setCategory] = useState("All");
     const selectRef = useRef()
     const getCategories = (_data) => {
         const cat = []
@@ -24,18 +24,18 @@ const Cars = () => {
 
     const doApi = async () => {
         try {
-            let url = `https://project-yarin.herokuapp.com/cars?perPage=99`
+            let url = `https://cars-otdf.onrender.com/cars?perPage=99`
             const { data } = await axios(url)
             console.log(data)
             getCategories(data)
 
             let carsFilterd = [...data]
-            if (category !='All' && selectRef.current.value) {
-             carsFilterd = data.filter(item => item.category === category);
-              
+            if (category != 'All' && selectRef.current.value) {
+                carsFilterd = data.filter(item => item.category === category);
+
             }
-           
-           
+
+
 
             setCars(carsFilterd);
 
@@ -57,7 +57,7 @@ const Cars = () => {
 
             <div style={{ color: 'skyblue' }} className="container">
                 <div className='col-lg-3 col-10 mx-auto'>
-                    <select ref={selectRef} onChange={() =>{
+                    <select ref={selectRef} onChange={() => {
                         setCategory(selectRef.current.value);
                     }} className='form-select'>
                         {categories?.map((item, i) => {
