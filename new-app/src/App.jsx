@@ -1,11 +1,11 @@
 import './App.css';
-import Cars from './components/cars/cars';
-import Form from './form/form';
+
+import AppRouters from './routers/appRouters';
 
 function App() {
   return (
     <div >
-      <Cars />
+      <AppRouters />
     </div>
   );
 }
