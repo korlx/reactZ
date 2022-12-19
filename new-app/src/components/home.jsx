@@ -59,8 +59,8 @@ const Home = () => {
         {loading ? <h1>Loading...</h1> :
           <div>
             <h1>City:{data.location.city}</h1>
-            <h2>Temp:{data.weather.temp}</h2>
-            <h2>Desc:{data.weather.desc}</h2>
+            <h2>Temp:{Math.round(data.weather.temp)}</h2>
+            <h2>About the sky:{data.weather.desc}</h2>
   
           </div>}
   
