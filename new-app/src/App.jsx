@@ -1,12 +1,18 @@
-import './App.css';
 
+import './App.css';
 import AppRouters from './routers/appRouters';
 
+
 function App() {
+
+
   return (
     <div >
-      <AppRouters />
+    
+    <AppRouters/>
     </div>
+
+
   );
 }
 

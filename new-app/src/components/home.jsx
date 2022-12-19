@@ -1,71 +1,69 @@
-import axios from 'axios'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { useRef } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Configuration, OpenAIApi } from 'openai'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
+const configuration = new Configuration({
+  apiKey: `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`,
+});
+const openai = new OpenAIApi(configuration);
 
 const Home = () => {
-    const[data,setDate]=useState({})
-    const [loading, setLoading] = useState(true)
-    const inputRef=useRef()
-    const nav=useNavigate()
-    const [query]=useSearchParams()
-    const doApi=async ()=>{
-    setLoading(true)
-    let url=`https://api.openweathermap.org/data/2.5/weather?q=${query.get('city')}&appid=3f55a24e37304e63b483d73891af88ba&units=metric`
-    const{data}=await axios(url)
-    const obj={
-        location:{
-            city:data.name,
-            country:data.sys.country,
-           sunset:data.sys.sunset
-        },
-        weather:{
-            temp:data.main.temp,
-            humidity:data.main.humidity,
-            wind:data.wind.speed,
-            desc:data.weather[0].description
-        },
-        coord: {
-            lon:data.coord.lon,
-            lat:data.coord.lat
-            }
-        
-    }
-    console.log(obj);
-    setDate(obj)
-    setLoading(false)
-    }
+  const params = useParams()
+  const inputRef = useRef()
+  const nav = useNavigate()
+  const [image,setImage]= useState("")
+  const [loading,setLoading] = useState(false)
+  console.log(params)
 
-    useEffect(()=>{
-        console.log(query.get('city'))
-        doApi();
-    },[query])
-    
-    
-    return (
-        <div className='d-flex flex-column align-items-center py-5'>
+  const doApi = async () => {
+
+    if(params.searchImg){
+      setLoading(true)
+      const {data} = await openai.createImage({
+        prompt: params.searchImg,
+        n: 1,
+        size: "1024x1024",
       
-      <div className='d-flex'>
-        <input ref={inputRef} className='form-control' type="text" />
-        <button onClick={()=>{
-          nav('?city='+inputRef.current.value);
+      });
+      setImage(data.data[0].url)
+      // console.log(data)
+      setLoading(false)
+    }
+  
 
-        }} className='mx-2 btn btn-primary'>Search</button>
+  }
+
+  useEffect(()=>{
+    doApi()
+  },[params])
+
+  return (
+    <div>
+      <div className="container d-flex flex-column align-items-center">
+        <div className='col-lg-4 col-md-5 col-6'>
+          <label>Search Image:</label>
+          <input onKeyDown={(e)=>{
+            if(e.key == 'Enter'){
+              nav('/'+inputRef.current.value)
+            }
+          }} ref={inputRef} type="search" className='form-control' />
+        </div>
+
+          {!loading && !image.length ? <p>Input somthing...</p>  :
+
+        <div>
+        {loading ? <img src='https://media3.giphy.com/media/ZO9b1ntYVJmjZlsWlm/giphy.gif' alt='loading' />:
+        <img className='mt-5' src={image} width={'60%'} alt={params.searchImg} />}
+        </div>
+ }
       </div>
-  
-        {loading ? <h1>Loading...</h1> :
-          <div>
-            <h1>City:{data.location.city}</h1>
-            <h2>Temp:{data.weather.temp}</h2>
-            <h2>Desc:{data.weather.desc}</h2>
-  
-          </div>}
-  
-      </div>
-    )
+    </div>
+  )
 }
 
 export default Home
+
+// apikey
+//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
