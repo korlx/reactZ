@@ -10,6 +10,7 @@ const AppRouters = () => {
             <Routes>
                 <Route path='/' element={<Layout />} >
                 <Route path='/' element={<Main />}/>
+                <Route path='/:search' element={<Main/>}/>
                 <Route path='/movieinfo/:id' element={<Infocard />} />
 
                 </Route>
